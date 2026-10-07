@@ -46,3 +46,14 @@ switch (orden) {
     default:
         console.log("Perdon, no tenemos stock")
 }
+
+// bucle for
+
+// for (inicialización; condición; incremento) {
+  // Código que se ejecuta en cada vuelta
+// }
+
+
+for (let i = 0; i < 5; i++) {
+    console.log
+}
