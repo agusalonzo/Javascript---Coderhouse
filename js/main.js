@@ -1,10 +1,24 @@
 
 
-// Funcionar sin errores: No debe haber errores de sintaxis al abrir el archivo.
-//Combinar estructuras: Debe existir al menos un bucle que contenga un condicional dentro.
-//Interactividad: El script debe interactuar con el usuario mediante prompt o console.log.
+const sugerirCanciones = (minutos) => Math.floor(minutos / 3)
 
-// Simulador: creacion de playlist
+const formatoCancion = (nombre, genero) =>  "La cancion seleccionada es: " + nombre + ". El genero de la cancion es: " + genero 
+
+function mostrarTotal (total, minutos) {
+    alert("Playlist creada con exito.\nEl total de canciones es: " + total + "\nDuracion estimada: " + minutos + " minutos.") 
+}
+
+const calcularMinutos = (totalCanciones) => totalCanciones * 3
+
+let tiempoDisponible = Number(prompt("Ingresa cuantos minutos tenes para escuchar musica hoy.\nTe sugerimos cuantas canciones agregar a tu playlist"))
+
+if (tiempoDisponible > 0) {
+    let sugerencia = sugerirCanciones (tiempoDisponible)
+    alert("Tu tiempo disponible es de: " + tiempoDisponible + " minutos." + " Te sugerimos agregar: " + sugerencia + " canciones")
+
+}
+
+
 
 let continuar = true 
 
@@ -16,7 +30,6 @@ while (continuar) {
     if (cancion === null || cancion.trim().toUpperCase() === "ESC") {
 
         continuar = false
-        alert("Playlist creada.")
     } 
     
     else if (cancion.trim() === "") {
@@ -28,7 +41,13 @@ while (continuar) {
         
         contadorCanciones++
         
-        alert("Cancion agregada:" + cancion + ". Genero: " + genero)
-        }
+        let detalle = formatoCancion(cancion, genero)
+            alert(detalle)
     }
-alert("Total de canciones en tu playlist:" + contadorCanciones)
+}
+
+let duracionFinal = calcularMinutos (contadorCanciones)
+
+mostrarTotal (contadorCanciones, duracionFinal) 
+
+
