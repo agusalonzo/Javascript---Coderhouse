@@ -1,53 +1,33 @@
+// simulador ecommerce regaleria dulces
 
 
-const sugerirCanciones = (minutos) => Math.floor(minutos / 3)
+const catalogo = ["Trufas Patagonia", "Choco Oreo", "Bombones Nutella", "Especial Halloween", "Paletas"]
 
-const formatoCancion = (nombre, genero) =>  "La cancion seleccionada es: " + nombre + ". El genero de la cancion es: " + genero 
+catalogo.push("Choco Sorpresa")
+catalogo.unshift("Promo del dia")
 
-function mostrarTotal (total, minutos) {
-    alert("Playlist creada con exito.\nEl total de canciones es: " + total + "\nDuracion estimada: " + minutos + " minutos.") 
+const agotado = catalogo.pop(); 
+console.log(`Sin stock. Se ha eliminado el elemento: ${agotado}`)
+
+const buscado = prompt("¿Qué dulce buscas?")
+
+if (catalogo.includes(buscado)) {
+  const posicion = catalogo.indexOf(buscado)
+  console.log(`✅ "${buscado}" está en stock, en la posición ${posicion}`)
+} else {
+  console.log(`❌ "${buscado}" no está en stock`)
 }
 
-const calcularMinutos = (totalCanciones) => totalCanciones * 3
 
-let tiempoDisponible = Number(prompt("Ingresa cuantos minutos tenes para escuchar musica hoy.\nTe sugerimos cuantas canciones agregar a tu playlist"))
+catalogo.splice(2, 1, "Box Premium") 
 
-if (tiempoDisponible > 0) {
-    let sugerencia = sugerirCanciones (tiempoDisponible)
-    alert("Tu tiempo disponible es de: " + tiempoDisponible + " minutos." + " Te sugerimos agregar: " + sugerencia + " canciones")
 
+function listarStock(lista) {
+  console.log("--- Stock actual ---")
+  for (const producto of lista) {
+    console.log(`Producto: ${producto}`)
+  }
+  console.log(`Total: ${lista.length} productos`)
 }
 
-
-
-let continuar = true 
-
-let contadorCanciones = 0
-
-while (continuar) {
-    let cancion = prompt("Ingresa el nombre de la cancion que deseas agregar. Para finalizar escribi ESC.")
-    
-    if (cancion === null || cancion.trim().toUpperCase() === "ESC") {
-
-        continuar = false
-    } 
-    
-    else if (cancion.trim() === "") {
-        
-        alert("Escribe un nombre valido o finaliza escribiendo ESC")
-    }
-
-    else { let genero = prompt("Que genero es?")
-        
-        contadorCanciones++
-        
-        let detalle = formatoCancion(cancion, genero)
-            alert(detalle)
-    }
-}
-
-let duracionFinal = calcularMinutos (contadorCanciones)
-
-mostrarTotal (contadorCanciones, duracionFinal) 
-
-
+listarStock(catalogo)
