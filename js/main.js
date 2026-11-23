@@ -1,6 +1,9 @@
 
+// variable descuento transfer
+
 const descuento = 0.90
 
+// clase constructora
 
 class Producto {
   static id = 0
@@ -17,6 +20,7 @@ class Producto {
   }
 }
 
+// objetos
 
 const productos = [
   new Producto("Chocolate", "Bombon Nutella", 20, 4000),
@@ -24,7 +28,10 @@ const productos = [
   new Producto("Chocolate", "Choco Oreos", 15, 7000)
 ]
 
+// carrito vacio
 const carritos = []
+
+// nodos
 
 const contenedorProductos = document.getElementById("contenedor-productos")
 const contenedorCarrito = document.getElementById("contenedor-carrito")
@@ -33,6 +40,7 @@ const checkTransferencia = document.getElementById("check-transferencia")
 const inputBusqueda = document.getElementById("input-busqueda")
 const formCheckout = document.getElementById("form-checkout")
 const mensajeCheckout = document.getElementById("mensaje-checkout")
+
 
 
 const calcularTotal = () => {
@@ -59,8 +67,9 @@ const renderizarCatalogo = (lista) => {
     return
   }
 
+  // se agregan las cards
+  
   lista.forEach((producto) => {
-    // 1. Crear la tarjeta
     const card = document.createElement("div")
     card.classList.add("tarjeta-producto")
 
