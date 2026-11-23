@@ -4,11 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pre-Entrega 6</title>
+    <title>Kosmos Nova</title>
+    <link rel="stylesheet" href="./css/style.css">
     <script defer src="./js/main.js"> </script>
 </head>
 <body>
-    <h1> Interactuando con Funciones de Orden Superior </h1>
+  <header>
+    <h1>Kosmos Nova Regalería</h1>
+    <nav class="navegacion">
+      <ul class="lista-nav">
+        <li class="item"><a href="#">Chocolates</a></li>
+        <li class="item"><a href="#">Galletas</a></li>
+        <li class="item"><a href="#">Boxes</a></li>
+        <li class="item"><a href="#">Especial Navidad</a></li>
+      </ul>
+      <div class="botones-sesion">
+        <a href="#" class="btn-ingresar">Ingresar</a>
+        <a href="#" class="btn-principal">Registrarse</a>
+      </div>
+    </nav>
+  </header>
+  <main class="contenedor-principal">
+    
+
+    <section class="seccion-catalogo">
+      <h2>Catálogo de productos</h2>
+      <input type="text" id="input-busqueda" placeholder="Buscar por nombre o categoría...">
+      <div id="contenedor-productos" class="grilla-productos"></div>
+    </section>
+
+
+    <section class="seccion-carrito">
+      <h2>Tu Carrito</h2>
+      <div id="contenedor-carrito"></div>
+      <div class="resumen-carrito">
+        <label>
+          <input type="checkbox" id="check-transferencia"> Pagar con transferencia (10% OFF)
+        </label>
+        <p id="total-carrito">Total: $0</p>
+      </div>
+    </section>
+  
+
+    <section class="seccion-checkout">
+      <h2>Datos para el envío</h2>
+      <form id="form-checkout">
+        <input type="text" id="input-nombre" placeholder="Nombre completo" required>
+        <input type="email" id="input-email" placeholder="Correo electrónico" required>
+        <input type="text" id="input-direccion" placeholder="Dirección de entrega" required>
+        <button type="submit" id="btn-comprar">Confirmar compra</button>
+      </form>
+      <div id="mensaje-checkout" class="mensaje"></div>
+    </section>
+  </main>
     
 </body>
 </html>
