@@ -1,9 +1,6 @@
 
-// variable descuento transfer
-
 const descuento = 0.90
 
-// clase constructora
 
 class Producto {
   static id = 0
@@ -20,7 +17,6 @@ class Producto {
   }
 }
 
-// objetos
 
 const productos = [
   new Producto("Chocolate", "Bombon Nutella", 20, 4000),
@@ -28,10 +24,9 @@ const productos = [
   new Producto("Chocolate", "Choco Oreos", 15, 7000)
 ]
 
-// carrito vacio
-const carritos = []
 
-// nodos
+const carritos = JSON.parse(localStorage.getItem("carrito")) ?? []
+
 
 const contenedorProductos = document.getElementById("contenedor-productos")
 const contenedorCarrito = document.getElementById("contenedor-carrito")
@@ -42,22 +37,21 @@ const formCheckout = document.getElementById("form-checkout")
 const mensajeCheckout = document.getElementById("mensaje-checkout")
 
 
+const guardarCarritoEnStorage = () => {
+  localStorage.setItem("carrito", JSON.stringify(carritos))
+}
 
 const calcularTotal = () => {
   const pagaConTransfer = checkTransferencia.checked
-  
+
   const total = carritos.reduce((acum, item) => {
-    if (pagaConTransfer) {
-      return acum + item.descuentoTransfer()
-    } else {
-      return acum + item.precio
-    }
+    const precioFinal = pagaConTransfer ? (item.precio * descuento) : item.precio
+    return acum + precioFinal
   }, 0)
 
   totalCarrito.textContent = `Total: $${total.toLocaleString("es-AR")}`
   return total
 }
-
 
 const renderizarCatalogo = (lista) => {
   contenedorProductos.innerHTML = ""
@@ -67,29 +61,28 @@ const renderizarCatalogo = (lista) => {
     return
   }
 
-  // se agregan las cards
-  
   lista.forEach((producto) => {
+    const { nombre, categoria, stock, precio } = producto
+
     const card = document.createElement("div")
     card.classList.add("tarjeta-producto")
 
-
     card.innerHTML = `
-      <h3>${producto.nombre}</h3>
-      <p>Categoría: <strong>${producto.categoria}</strong></p>
-      <p>Stock disponible: ${producto.stock}</p>
-      <p class="precio">$${producto.precio}</p>
+      <h3>${nombre}</h3>
+      <p>Categoría: <strong>${categoria}</strong></p>
+      <p>Stock disponible: ${stock}</p>
+      <p class="precio">$${precio}</p>
     `
 
-
     const boton = document.createElement("button")
-    boton.innerText = producto.stock === 0 ? "Sin stock" : "Agregar al carrito"
-    boton.disabled = producto.stock === 0
+    boton.innerText = stock === 0 ? "Sin stock" : "Agregar al carrito"
+    boton.disabled = stock === 0
 
     boton.onclick = () => {
       if (producto.stock > 0) {
         producto.stock--
         carritos.push(producto)
+        guardarCarritoEnStorage()
         renderizarCarrito()
         aplicarFiltroBusqueda()
       }
@@ -110,17 +103,24 @@ const renderizarCarrito = () => {
   }
 
   carritos.forEach((item, index) => {
+    const { nombre, precio } = item
+
     const fila = document.createElement("div")
     fila.classList.add("item-carrito")
 
-    fila.innerHTML = `<span>${item.nombre} - $${item.precio}</span>`
+    fila.innerHTML = `<span>${nombre} - $${precio}</span>`
 
     const botonQuitar = document.createElement("button")
     botonQuitar.innerText = "Quitar"
 
     botonQuitar.onclick = () => {
-      item.stock++
+      const productoEnCatalogo = productos.find((p) => p.nombre === item.nombre)
+      if (productoEnCatalogo) {
+        productoEnCatalogo.stock++
+      }
+
       carritos.splice(index, 1)
+      guardarCarritoEnStorage() 
       renderizarCarrito()
       aplicarFiltroBusqueda()
     }
@@ -159,7 +159,9 @@ formCheckout.onsubmit = (e) => {
   mensajeCheckout.className = "mensaje mensaje-exito"
   mensajeCheckout.textContent = `¡Muchas gracias por tu compra, ${nombreCliente}! Total abonado: $${totalAbonado.toLocaleString("es-AR")}. Te enviamos los detalles a tu email.`
 
+
   carritos.length = 0
+  guardarCarritoEnStorage()
   renderizarCarrito()
   formCheckout.reset()
 }
